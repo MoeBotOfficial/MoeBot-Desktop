@@ -1,0 +1,47 @@
+[package]
+name = "moebot-desktop"
+version = "0.7.7"
+description = "MoeBot desktop console"
+authors = ["MoeBot"]
+edition = "2021"
+rust-version = "1.77.2"
+license = "AGPL-3.0-only"
+
+[lib]
+name = "moebot_desktop_lib"
+# rlib only: this app ships as a Windows binary that links the crate statically.
+# The cdylib/staticlib artifacts exist for mobile targets and their Windows DLL
+# export table overflows GNU ld's ordinals once the http plugin is linked in
+# (`error: export ordinal too large`).
+crate-type = ["rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-http = { version = "2", default-features = false, features = [
+  "native-tls",
+  "http2",
+  "charset",
+  "system-proxy",
+  # Required, not optional: without it the plugin always appends an Origin header
+  # (commands.rs:350) and the console looks like a rogue browser origin to the
+  # backend. With it, an empty Origin removes the header instead (commands.rs:365).
+  "unsafe-headers",
+] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+incremental = true
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

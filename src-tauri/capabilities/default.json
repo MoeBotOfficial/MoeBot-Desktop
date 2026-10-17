@@ -1,0 +1,21 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Permissions for the MoeBot console window.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    {
+      "identifier": "http:default",
+      "description": "The console talks to whatever backend the user types in, so every http/https origin has to be reachable. The `http://*` form only matches default ports (see the plugin's scope tests), and self-hosted backends are usually http://host:8787, so the port wildcards below carry the real traffic.",
+      "allow": [
+        { "url": "http://*" },
+        { "url": "https://*" },
+        { "url": "http://*/*" },
+        { "url": "https://*/*" },
+        { "url": "http://*:*/*" },
+        { "url": "https://*:*/*" }
+      ]
+    }
+  ]
+}

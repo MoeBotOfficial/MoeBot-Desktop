@@ -1,0 +1,313 @@
+/* MoeBot desktop shell overrides — only ever copied into the desktop dist/. */
+
+#install-app,
+#pwa-install-dialog {
+  display: none !important;
+}
+
+/* slim scrollbars, revealed only when the pointer is over the pane or near the window edge */
+::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  background-clip: content-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  transition: background-color .22s ease;
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(23, 109, 88, .55); }
+:not(html):not(body):hover::-webkit-scrollbar-thumb { background-color: rgba(23, 109, 88, .28); }
+:not(html):not(body):hover::-webkit-scrollbar-thumb:hover { background-color: rgba(23, 109, 88, .55); }
+html.mb-edge::-webkit-scrollbar-thumb,
+html.mb-edge body::-webkit-scrollbar-thumb { background-color: rgba(23, 109, 88, .28); }
+html.mb-edge::-webkit-scrollbar-thumb:hover,
+html.mb-edge body::-webkit-scrollbar-thumb:hover { background-color: rgba(23, 109, 88, .55); }
+
+/* ---- bot hub (landing page) ---- */
+#bot-hub { margin-bottom: 30px; }
+#bot-hub[hidden] { display: none !important; }
+.bot-hub-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+.bot-hub-head p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.bot-list { display: grid; gap: 10px; }
+.bot-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.bot-card:hover { border-color: #c3dace; box-shadow: 0 8px 22px rgba(23, 109, 88, .07); }
+.bot-card.active { border-color: #9dc9b6; background: #f5faf7; }
+.bot-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #eaf3ee;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  flex: none;
+}
+.bot-meta { flex: 1; min-width: 0; }
+.bot-meta strong { display: block; font-size: 15px; font-weight: 650; color: #223d34; }
+.bot-meta small { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.bot-meta input {
+  width: 100%;
+  max-width: 320px;
+  padding: 6px 9px;
+  border: 1px solid #c3dace;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #223d34;
+}
+.bot-actions { display: flex; gap: 8px; flex: none; }
+.bot-empty {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+#bot-hub-path { margin: 16px 0 0; font-size: 11px; color: #97a49c; }
+#bot-hub-path code { font-size: 11px; overflow-wrap: anywhere; }
+
+/* ---- add-bot panel (reuses the upstream connect form) ---- */
+#add-bot-panel[hidden] { display: none !important; }
+#add-bot-panel { margin-bottom: 26px; }
+.add-bot-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1540px;
+  margin-bottom: 14px;
+}
+.add-bot-head p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ---- sidebar bot switcher ---- */
+.sidebar-bottom { position: relative; }
+.bot-switcher { position: relative; }
+.bot-switcher[hidden] { display: none !important; }
+.bot-switcher-trigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  background: #f5f8f6;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 10px;
+  text-align: left;
+  color: #4b5f57;
+}
+.bot-switcher-trigger:hover { background: #eef5f1; border-color: #cfe0d7; }
+.bot-switcher-trigger[aria-expanded="true"] { background: #eef5f1; border-color: #9dc9b6; }
+.bot-switcher-text { flex: 1; min-width: 0; }
+.bot-switcher-text strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  color: #223d34;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bot-switcher-text small { display: block; margin: 1px 0 0; color: #8a9a92; font-size: 11px; }
+.bot-switcher-text #connection-label { display: block; margin: 1px 0 0; color: #8a9a92; font-size: 11px; }
+.bot-switcher-caret { flex: none; color: #9aaba3; font-size: 9px; transition: transform .18s ease; }
+.bot-switcher-trigger[aria-expanded="true"] .bot-switcher-caret { transform: rotate(180deg); }
+.bot-switcher-menu {
+  position: absolute;
+  left: 0;
+  right: auto;
+  width: 272px;
+  bottom: calc(100% + 8px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 16px 34px rgba(23, 60, 48, .16);
+  z-index: 60;
+  max-height: 46vh;
+  overflow: auto;
+}
+.bot-switcher-menu[hidden] { display: none !important; }
+.bot-switcher-menu li { display: flex; }
+.bot-switcher-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 9px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  text-align: left;
+  color: #3c514a;
+  font-size: 12px;
+}
+.bot-switcher-menu button:hover { background: #f1f7f3; }
+.bot-switcher-menu .sw-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bot-switcher-menu .sw-host {
+  flex: none;
+  max-width: 138px;
+  color: #8a9a92;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bot-switcher-menu .sw-tick { flex: none; color: var(--green); font-size: 11px; }
+.bot-switcher-menu .sw-sep { border-top: 1px solid var(--line); margin: 6px 4px; }
+.bot-switcher-menu .sw-empty { padding: 12px 10px; color: var(--muted); font-size: 12px; }
+
+/* ===== motion & polish ==================================================
+   Timings and entrance animations only; the layout rules above are
+   untouched and this whole block can be dropped without side effects.
+   desktop-shell.js adds `.mb-rise` / `.mb-stagger` for one beat after a
+   view change, so re-renders (which happen on every keystroke in the
+   plugin/MCP editors) never replay an animation. */
+
+:root {
+  --mb-ease: cubic-bezier(.22, .61, .36, 1);
+  --mb-tap: .13s;
+  --mb-move: .24s;
+  --mb-enter: .36s;
+}
+
+@keyframes mb-rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+@keyframes mb-row { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+@keyframes mb-pop { from { opacity: 0; transform: translateY(8px) scale(.975); } to { opacity: 1; transform: none; } }
+@keyframes mb-slide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes mb-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(6px) scale(.98); } }
+@keyframes mb-ring { from { box-shadow: 0 0 0 0 rgba(36, 163, 124, .55); } to { box-shadow: 0 0 0 9px rgba(36, 163, 124, 0); } }
+
+.mb-rise { animation: mb-rise var(--mb-enter) var(--mb-ease) both; }
+.mb-stagger > * { animation: mb-row var(--mb-enter) var(--mb-ease) both; }
+.mb-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.mb-stagger > *:nth-child(2) { animation-delay: 34ms; }
+.mb-stagger > *:nth-child(3) { animation-delay: 68ms; }
+.mb-stagger > *:nth-child(4) { animation-delay: 102ms; }
+.mb-stagger > *:nth-child(5) { animation-delay: 136ms; }
+.mb-stagger > *:nth-child(6) { animation-delay: 170ms; }
+.mb-stagger > *:nth-child(7) { animation-delay: 204ms; }
+.mb-stagger > *:nth-child(8) { animation-delay: 238ms; }
+.mb-stagger > *:nth-child(n+9) { animation-delay: 272ms; }
+
+/* ---- press / hover feedback ---- */
+.button,
+.text-button,
+.nav-item,
+.bot-card,
+.bot-switcher-trigger,
+.bot-switcher-menu button {
+  transition: background-color var(--mb-move) var(--mb-ease),
+              border-color var(--mb-move) var(--mb-ease),
+              color var(--mb-move) var(--mb-ease),
+              box-shadow var(--mb-move) var(--mb-ease),
+              transform var(--mb-tap) var(--mb-ease);
+}
+.button:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(23, 109, 88, .16); }
+.button.secondary:not(:disabled):hover { box-shadow: 0 7px 18px rgba(39, 72, 48, .10); }
+.button:not(:disabled):active { transform: translateY(0) scale(.985); box-shadow: none; }
+.text-button:hover { color: var(--green); }
+.text-button:active { transform: scale(.97); }
+
+.nav-item:hover { transform: translateX(2px); }
+.nav-item.active { box-shadow: inset 3px 0 0 var(--green); }
+.nav-item:active { transform: translateX(1px) scale(.995); }
+
+/* ---- keyboard focus stays visible, pointer focus stays clean ---- */
+.button:focus-visible,
+.text-button:focus-visible,
+.nav-item:focus-visible,
+.bot-switcher-trigger:focus-visible,
+.bot-switcher-menu button:focus-visible {
+  outline: 2px solid rgba(23, 109, 88, .5);
+  outline-offset: 2px;
+}
+
+/* ---- fields ---- */
+input:not([type=checkbox]):not([type=radio]),
+textarea,
+select {
+  transition: border-color var(--mb-move) var(--mb-ease),
+              box-shadow var(--mb-move) var(--mb-ease),
+              background-color var(--mb-move) var(--mb-ease);
+}
+input:not([type=checkbox]):not([type=radio]):focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #93c6b0;
+  box-shadow: 0 0 0 3px rgba(23, 109, 88, .15);
+}
+
+/* ---- things the app reveals by toggling [hidden] ---- */
+.notice:not([hidden]) { animation: mb-slide .26s var(--mb-ease) both; }
+.deployment-panel:not([hidden]) { animation: mb-slide .3s var(--mb-ease) both; }
+.bot-switcher-menu:not([hidden]) { animation: mb-pop .2s var(--mb-ease) both; }
+.bot-switcher-menu.mb-closing { animation: mb-out .13s var(--mb-ease) both; pointer-events: none; }
+.status-dot.connected { animation: mb-ring .7s var(--mb-ease); }
+
+/* ---- bot cards ---- */
+.bot-card { position: relative; overflow: hidden; }
+.bot-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--green);
+  transform: scaleY(0);
+  transition: transform .28s var(--mb-ease);
+}
+.bot-card.active::before { transform: scaleY(1); }
+.bot-avatar {
+  background: linear-gradient(150deg, #f3f9f5, #e1eee7);
+  box-shadow: inset 0 0 0 1px rgba(23, 109, 88, .1);
+}
+#bot-hub-path code {
+  background: #f1f5f2;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 6px;
+  color: #6f8579;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .01ms !important;
+  }
+  .mb-rise,
+  .mb-stagger > * { animation: none !important; }
+  .button:not(:disabled):hover,
+  .nav-item:hover,
+  .nav-item:active { transform: none; }
+}
